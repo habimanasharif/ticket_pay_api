@@ -12,7 +12,7 @@
     const newUser = await UserModel.create(user);
     // if(!newUser)
     //   throw new APIError(httpStatus.BAD_REQUEST,"Oops...seems our server needed a break!")
-    // return newUser;
+     return newUser;
   }
 
   const createNewGoogleUser = async({ id, email, firstName, lastName, profilePhoto }) => {
