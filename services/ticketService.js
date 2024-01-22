@@ -4,7 +4,7 @@ import ApiError from '../utils/APIError.js';
 const createTicket = async(ticket) =>{
     const newTicket = await TicketModel.create(ticket);
     if(!newTicket)
-        throw new ApiError("Invaid User Id")
+        throw new Error("Invaid User Id")
     return newTicket;
 }
 

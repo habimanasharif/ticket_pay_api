@@ -5,7 +5,7 @@ import { RefreshTokenModel } from '../models/index.js';
 import moment from 'moment';
 import httpStatus from 'http-status';
 
-import APIError from '../utils/APIError.js';
+// import APIError from '../utils/APIError.js';
 
 const generateToken = async (userId, loginTime, expires, type) => {
   const payload = {
@@ -92,11 +92,11 @@ const generateAccessTokenFromRefreshTokenPayload = async ({
 const verifyRefreshToken = async (token) => {
   let tokenPayload = await verify(token, process.env.JWT_SECRET);
   if (!tokenPayload || tokenPayload.type !== tokenTypes.REFRESH)
-    throw new APIError(httpStatus.FORBIDDEN, 'Invalid Refresh Token - logout');
+    throw new Error(httpStatus.FORBIDDEN, 'Invalid Refresh Token - logout');
 
   let refreshTokenExists = await RefreshTokenModel.exists({ token: token });
   if (!refreshTokenExists)
-    throw new APIError(httpStatus.FORBIDDEN, 'Invalid Refresh Token - logout');
+    throw new Error(httpStatus.FORBIDDEN, 'Invalid Refresh Token - logout');
 
   return tokenPayload;
 };

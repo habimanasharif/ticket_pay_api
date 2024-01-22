@@ -7,21 +7,21 @@
   
   const createNewUser = async(user)=>{
     const oldUser =await UserModel.findOne({ email:user.email.toLowerCase() });
-    if(oldUser)
-      throw new APIError(httpStatus.BAD_REQUEST,"Email already exists.")
+    // if(oldUser)
+    //   throw new APIError(httpStatus.BAD_REQUEST,"Email already exists.")
     const newUser = await UserModel.create(user);
-    if(!newUser)
-      throw new APIError(httpStatus.BAD_REQUEST,"Oops...seems our server needed a break!")
-    return newUser;
+    // if(!newUser)
+    //   throw new APIError(httpStatus.BAD_REQUEST,"Oops...seems our server needed a break!")
+    // return newUser;
   }
 
   const createNewGoogleUser = async({ id, email, firstName, lastName, profilePhoto }) => {
     const oldUser =await UserModel.findOne({ email: email.toLowerCase() });
     if(oldUser)
-      throw new APIError(httpStatus.BAD_REQUEST,"Email already exists.")
+      throw new Error (httpStatus.BAD_REQUEST,"Email already exists.")
     const newUser = await UserModel.create({email, source: "google"});
     if(!newUser)
-      throw new APIError(httpStatus.BAD_REQUEST,"Oops...seems our server needed a break!")
+      throw new Error(httpStatus.BAD_REQUEST,"Oops...seems our server needed a break!")
     return newUser;
   }
 
@@ -32,12 +32,12 @@
     .lean();
   
     if (!user)
-      throw new APIError(httpStatus.BAD_REQUEST, 'invalid credentials');
+      throw new Error(httpStatus.BAD_REQUEST, 'invalid credentials');
   
     let passwordMatches = await bcrypt.compare(password, user.password);
   
     if (!passwordMatches)
-      throw new APIError(httpStatus.BAD_REQUEST, 'invalid credentials');
+      throw new Error(httpStatus.BAD_REQUEST, 'invalid credentials');
   
     return user;
   };
@@ -48,7 +48,7 @@
     .lean();
   
     if (!user)
-      throw new APIError(httpStatus.BAD_REQUEST, 'please sign up - this email does not exist');
+      throw new Error(httpStatus.BAD_REQUEST, 'please sign up - this email does not exist');
   
     return user;
   };
@@ -59,7 +59,7 @@
     });
   
     if (!userExists)
-      throw new APIError(httpStatus.FORBIDDEN, 'Invalid Refresh Token - logout');
+      throw new Error(httpStatus.FORBIDDEN, 'Invalid Refresh Token - logout');
   };
   
   const fetchUserFromAuthData = async ({ userId }) => {
@@ -69,7 +69,7 @@
       .lean();
   
     if (!user)
-      throw new APIError(httpStatus.UNAUTHORIZED, 'invalid access token user');
+      throw new Error(httpStatus.UNAUTHORIZED, 'invalid access token user');
   
     return user;
   };
@@ -84,7 +84,7 @@
     let passwordMatches = await bcrypt.compare(password, user.password);
   
     if (!passwordMatches)
-      throw new APIError(httpStatus.BAD_REQUEST, 'invalid current password');
+      throw new Error(httpStatus.BAD_REQUEST, 'invalid current password');
   };
   
   const updatePassword = async (userId, newPassword) => {
