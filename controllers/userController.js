@@ -3,14 +3,11 @@ import {
 } from '../services/userService.js';
   
 const getUserInfo = async (req, res, next) => {
-    const userId = req.authData.userId
+    const userId = req.body.userId
     try {
         const user = await getUserFromId(userId)
-        const responseUser = {
-            id : user._id,
-            email : user.email,
-        } 
-        res.json({user : responseUser});
+        
+        res.json({user : user});
     } catch (error) {
         next(error);
     }
