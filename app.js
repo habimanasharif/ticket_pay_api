@@ -37,13 +37,13 @@ app.use(cors());
 app.use('/v1', routes);
 
 // if error is not an instanceOf APIError, convert it.
-app.use(error.converter);
+// app.use(error.converter);
 
-// catch 404 and forward to error handler
-app.use(error.notFound);
+// // catch 404 and forward to error handler
+// app.use(error.notFound);
 
-// error handler, send stacktrace only during development
-app.use(error.handler);
+// // error handler, send stacktrace only during development
+// app.use(error.handler);
 
 
 export default app;
