@@ -2,19 +2,21 @@ import {
     createTicket,getAllTickets
   } from '../services/ticketService.js';
   import {
-    getUserFromId
-  } from '../services/userService.js';
+    findPlate,
+  } from '../services/plateService.js';
     
   const createNewTicket = async (req, res, next) => {
-      const {owner,name,vehicle,amount,details}= req.body
+      const {name,plate,amount,details}= req.body
       try {
-        console.log(owner)
         //   const user = await getUserFromId(owner)
         //   if(!user){
         //     throw new Error(`User ${owner} not found`)
         //   }
-
-          const newUser=await createTicket({owner:owner,name:name,amount:amount,details:details,vehicle:vehicle})
+        const myplate = await findPlate(plate)
+         if(!myplate){
+          throw Error("Plate number doesn't exist")
+         }
+          const newUser=await createTicket({owner:myplate.ownerId,name:name,amount:amount,details:details,vehicle:plate})
           const responseUser = {
               message : "Ticket created successfully",
               status:"success",
