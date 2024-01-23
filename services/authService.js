@@ -47,9 +47,6 @@
     })
     .lean();
   
-    if (!user)
-      throw new Error(httpStatus.BAD_REQUEST, 'please sign up - this email does not exist');
-  
     return user;
   };
   
