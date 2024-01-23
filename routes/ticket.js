@@ -15,7 +15,7 @@ const router = express.Router();
   );
   router
   .route('/all')
-  .get(
+  .post(
     trimRequest.all,
     controller.allTicket
   );
